@@ -36,11 +36,11 @@
     transform: rotate(360deg);
   }
 }
-.square{
+.square {
   width: 100px;
   height: 100px;
   background-color: red;
-  border:1px solid white;
+  border: 1px solid white;
   font-size: xx-large;
   color: white;
 }
