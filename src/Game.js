@@ -28,7 +28,38 @@ const Title = styled.h1`
     }
   }
 `;
+const ToggleButton = styled.div`
+  margin-top: 20px;
+  padding: 10px 20px;
+  font-size: 1.5rem;
+  color: #61dafb;
+  background-color: transparent;
+  border: 2px solid #61dafb;
+  cursor: pointer;
+  transition: all 0.3s;
+  animation: slideIn 1s ease-out;
 
+  &:hover {
+    background-color: #61dafb;
+    color: #282c34;
+    transform: translateY(-5px);
+  }
+
+  &:focus {
+    outline: none;
+  }
+
+  @keyframes slideIn {
+    from {
+      transform: translateY(20px);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+`;
 const GameInfoContainer = styled.div`
   margin-top: 20px;
   text-align: center;
@@ -102,6 +133,7 @@ const MoveButton = styled.button`
 export default function Game() {
   const [history, setHistory] = useState([Array(9).fill(null)]);
   const [currentMove, setCurrentMove] = useState(0);
+  const [isAscending, setIsAscending] = useState(true);
   const xIsNext = currentMove % 2 === 0;
   const currentSquares = history[currentMove];
   function handlePlay(nextSquares) {
@@ -122,17 +154,21 @@ export default function Game() {
     }
     return (
       <MoveItem key={move}>
+        <span>{currentMove === move ? `You are at move #${move}` : ''}</span>
         <MoveButton onClick={() => jumpTo(move)}>{description}</MoveButton>
       </MoveItem>
     );
   });
+  const sortedMoves = isAscending ? moves : moves.reverse();
+  const toggleOrder = () => setIsAscending(!isAscending);
 
   return (
     <GameWrapper>
       <Title>Tic Tac Toe</Title>
       <Board xIsNext={xIsNext} squares={currentSquares} onPlay={handlePlay} />
       <GameInfoContainer>
-        <MovesList>{moves}</MovesList>
+        <ToggleButton onClick={toggleOrder}>{isAscending ? 'Sort Descending' : 'Sort Ascending'}</ToggleButton>
+        <MovesList>{sortedMoves}</MovesList>
       </GameInfoContainer>
     </GameWrapper>
   );
