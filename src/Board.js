@@ -60,13 +60,20 @@ function Board({ xIsNext, squares, onPlay }) {
     nextSquares[i] = xIsNext ? "X" : "O";
     onPlay(nextSquares);
   }
-  const winner = calculateWinner(squares);
-  const status = winner
-    ? "Winner: " + winner
+  const winnerInfo = calculateWinner(squares);
+  const winner = winnerInfo
+    ? "Winner: " + winnerInfo.winner
     : "Next player: " + (xIsNext ? "X" : "O");
+  const winningLine = winnerInfo ? winnerInfo.line : [];
 
   function renderSquare(i) {
-    return <Square value={squares[i]} onSquareClick={() => handleClick(i)} />;
+    return (
+      <Square
+        value={squares[i]}
+        onSquareClick={() => handleClick(i)}
+        highlight={winningLine.includes(i)}
+      />
+    );
   }
   const board = [];
   for (let row = 0; row < 3; row++) {
@@ -78,7 +85,7 @@ function Board({ xIsNext, squares, onPlay }) {
   }
   return (
     <>
-      <Status>{status}</Status>
+      <Status>{winner}</Status>
       <BoardWrapper>{board}</BoardWrapper>
     </>
   );

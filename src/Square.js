@@ -12,6 +12,12 @@ const SquareWrapper = styled.button`
   text-align: center;
   line-height: 100px;
   transition: background-color 0.3s, transform 0.3s;
+  
+  &.highlight {
+    background-color: yellow; /* Highlight background color */
+    transform: scale(1.1); /* Slightly enlarge the highlighted square */
+    border-color: orange; /* Optional: change border color */
+  }
 
   &:hover {
     background-color: #21a1f1;
@@ -52,8 +58,8 @@ const SquareWrapper = styled.button`
  * @param {function} props.onSquareClick - A callback function to call when the square is clicked.
  * @return {JSX.Element} The rendered square element.
  */
-function Square({ value, onSquareClick }) {
-  return <SquareWrapper onClick={onSquareClick}>{value}</SquareWrapper>;
+function Square({ value, onSquareClick, highlight = false }) {
+  return <SquareWrapper className={`square ${highlight ? 'highlight' : ''}`} onClick={onSquareClick}>{value}</SquareWrapper>;
 }
 
 export default Square;
