@@ -15,14 +15,27 @@ const Title = styled.h1`
   font-size: 3rem;
   margin-bottom: 20px;
   color: #61dafb;
+  animation: fadeIn 2s ease-out;
+
+  @keyframes fadeIn {
+    0% {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
 `;
 const BoardWrapper = styled.div`
+  margin-top: 20px;
   display: grid;
   grid-template-columns: repeat(3, 100px);
   grid-template-rows: repeat(3, 100px);
   gap: 2px;
 `;
-const SquareWrapper = styled.div`
+const SquareWrapper = styled.button`
   width: 100px;
   height: 100px;
   background-color: #61dafb;
@@ -32,15 +45,37 @@ const SquareWrapper = styled.div`
   cursor: pointer;
   text-align: center;
   line-height: 100px;
-  transition: background-color 0.3s;
+  transition: background-color 0.3s, transform 0.3s;
 
   &:hover {
     background-color: #21a1f1;
+    transform: scale(1.1);
   }
 
   &:disabled {
     background-color: #ddd;
     cursor: not-allowed;
+    transform: scale(1);
+  }
+
+  &:focus {
+    outline: none;
+  }
+
+  animation: bounceIn 0.6s;
+
+  @keyframes bounceIn {
+    0% {
+      transform: scale(0.8);
+      opacity: 0;
+    }
+    60% {
+      transform: scale(1.2);
+      opacity: 1;
+    }
+    100% {
+      transform: scale(1);
+    }
   }
 `;
 const GameInfoContainer = styled.div`
@@ -50,22 +85,74 @@ const GameInfoContainer = styled.div`
 `;
 
 const Status = styled.div`
-  margin-bottom: 10px;
-  font-weight: bold;
+  margin-top: 20px;
+  padding: 10px 20px;
+  font-size: 1.5rem;
   color: #61dafb;
-`;
+  background-color: transparent;
+  border: 2px solid #61dafb;
+  cursor: pointer;
+  transition: all 0.3s;
+  animation: slideIn 1s ease-out;
 
+  &:hover {
+    background-color: #61dafb;
+    color: #282c34;
+    transform: translateY(-5px);
+  }
+
+  &:focus {
+    outline: none;
+  }
+
+  @keyframes slideIn {
+    from {
+      transform: translateY(20px);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+`;
 const MovesList = styled.ol`
   list-style-type: none;
   padding: 0;
-  max-height: 200px;
-  overflow-y: auto;
+  min-width: 200px;
   margin: 0 auto;
   width: 80%;
+  animation: fadeInList 1.5s ease-out;
+
+  @keyframes fadeInList {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
 `;
 
 const MoveItem = styled.li`
   margin: 5px 0;
+  animation: fadeInItem 0.5s ease-out;
+  transition: transform 0.3s;
+
+  &:hover {
+    transform: scale(1.05);
+  }
+
+  @keyframes fadeInItem {
+    0% {
+      opacity: 0;
+      transform: translateX(-10px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
 `;
 
 const MoveButton = styled.button`
@@ -75,6 +162,7 @@ const MoveButton = styled.button`
   padding: 5px 10px;
   font-size: 1rem;
   cursor: pointer;
+  width: 100%;
   transition: background-color 0.3s, color 0.3s;
 
   &:hover {
